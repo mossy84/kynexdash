@@ -20,20 +20,21 @@ public class InputEvents {
 	public static void onKeyPress(InputEvent.KeyInputEvent input) {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (minecraft.level == null) return;
-		onInput(minecraft, input.getKey(), input.getAction());
+		onInput(minecraft, input.getKey());
 	}
 	
 	@SubscribeEvent
 	public static void onMousePress(InputEvent.MouseInputEvent input) {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (minecraft.level == null) return;
-		onInput(minecraft, input.getButton(), input.getAction());
+		onInput(minecraft, input.getButton());
 	}
 	
-	private static void onInput(Minecraft minecraft, int key, int action) {
+	private static void onInput(Minecraft minecraft, int key) {
 		ClientPlayerEntity player = minecraft.player;
 		if (player.isCreative()) tick = 0;
-		if (minecraft.screen == null && key == KeyBinds.dash.getKey().getValue() && tick == 0 && !player.isFallFlying() && !player.isSpectator()) {
+		boolean useSurvival = OptionsHolder.ALLOWED_IN_SURVIVAL.get() || player.isCreative();
+		if (minecraft.screen == null && key == KeyBinds.dash.getKey().getValue() && tick == 0 && useSurvival && !player.isFallFlying() && !player.isSpectator()) {
 			Vector3d movement = player.getDeltaMovement();
 			Vector3d facing = player.getLookAngle().scale(BOOST_VELOCITY); // getLookAngle() returns normalized vector
 			if (movement.length() < 10) player.setDeltaMovement(movement.add(facing));
