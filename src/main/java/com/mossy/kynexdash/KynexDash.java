@@ -41,7 +41,7 @@ public class KynexDash
 		}
 		
 		public boolean isFoil(ItemStack stack) {
-			return true;
+			return OptionsHolder.SURVIVAL_REQUIRES_BAUBLE.get();
 		}		
     }
     
