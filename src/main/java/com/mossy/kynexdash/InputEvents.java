@@ -1,7 +1,7 @@
 package com.mossy.kynexdash;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
@@ -32,7 +32,7 @@ public class InputEvents {
 	}
 	
 	private static void onInput(Minecraft minecraft, int key) {
-		ClientPlayerEntity player = minecraft.player;
+		PlayerEntity player = minecraft.player;
 		// if dash not allowed in spectator and player spectator then cancel dash
 		if (!OptionsHolder.ALLOWED_IN_SPECTATOR.get() && player.isSpectator()) return;
 		// if dash requires bauble and player inventory does not contain bauble and player not creative then cancel dash
@@ -44,7 +44,7 @@ public class InputEvents {
 		// if player creative then set cooldown to 0
 		if (player.isCreative()) cooldown = 0;
 		// if no gui open and keybind pressed and cooldown 0 then dash
-		if (minecraft.screen == null && key == KeyBinds.dash.getKey().getValue() && cooldown == 0) {
+		if (minecraft.screen == null && key == KynexDash.KeyBinds.dash.getKey().getValue() && cooldown == 0) {
 			// get player movement as vector
 			Vector3d movement = player.getDeltaMovement();
 			// get look angle as normalized vector and multiply by dash speed to get dash velocity vector
@@ -52,7 +52,10 @@ public class InputEvents {
 			// if player not above speed limit set player movement to movement + dash velocity
 			if (movement.length() < OptionsHolder.FLY_SPEED_LIMIT.get()) player.setDeltaMovement(movement.add(facing));
 			// set cooldown if player not creative
-			if (!player.isCreative()) cooldown = COOLDOWN;
+			if (!player.isCreative()) {
+				cooldown = COOLDOWN;
+				KynexDash.Network.CHANNEL.sendToServer(new HungerPacket(OptionsHolder.DASH_HUNGER.get()));
+			}
 		}
 	}
 	

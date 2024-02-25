@@ -11,6 +11,6 @@ public class ClientEventBusSubscriber {
 	
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
-		KeyBinds.register(event);
+		KynexDash.KeyBinds.register(event);
 	}
 }
