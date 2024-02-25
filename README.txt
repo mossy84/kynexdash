@@ -1,3 +1,4 @@
+Compiled jars can be found in build/libs
 
 Source installation information for modders
 -------------------------------------------
