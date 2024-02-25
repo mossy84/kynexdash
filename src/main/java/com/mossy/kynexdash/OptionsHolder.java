@@ -14,6 +14,7 @@ public class OptionsHolder {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOWED_WHILE_GLIDING;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SURVIVAL_REQUIRES_BAUBLE;
 	public static final ForgeConfigSpec.ConfigValue<Integer> DASH_HUNGER;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> BACKDASH_ENABLED;
 	
 	static String[] desc1 = {"Sets the boost velocity. Default: 2.0D", "Boost Velocity"};
 	static String[] desc2 = {"Sets maximum dash speed. Default: 10.0D", "Speed Limit"};
@@ -23,6 +24,7 @@ public class OptionsHolder {
 	static String[] desc6 = {"Can the dash be used on elytra", "Allowed while gliding"};
 	static String[] desc7 = {"Does dashing in survival require the dash bauble", "Requires dash bauble"};
 	static String[] desc8 = {"Sets hunger from each use of dash. Default: 1", "Dash hunger"};
+	static String[] desc9 = {"Enables backwards dashing.", "Backdash Enabled"};
 	
 	static {
 		BUILDER.push("Config for KynexDash");
@@ -35,6 +37,7 @@ public class OptionsHolder {
 		ALLOWED_WHILE_GLIDING = BUILDER.comment(desc6[0]).define(desc6[1], false);
 		SURVIVAL_REQUIRES_BAUBLE = BUILDER.comment(desc7[0]).define(desc7[1], true);
 		DASH_HUNGER = BUILDER.comment(desc8[0]).define(desc8[1], 1);
+		BACKDASH_ENABLED = BUILDER.comment(desc9[0]).define(desc9[1], true);
 		
 		BUILDER.pop();
 		SPEC = BUILDER.build();

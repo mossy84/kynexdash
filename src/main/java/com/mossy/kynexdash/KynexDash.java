@@ -73,11 +73,14 @@ public class KynexDash
     
     public static class KeyBinds {
     	public static KeyBinding dash;
+    	public static KeyBinding backDash;
     	
     	public static void register(final FMLClientSetupEvent event) {
     		dash = create("dash", 0x52); // press R
+    		backDash = create("backDash", 0x58); // press x
     		
     		ClientRegistry.registerKeyBinding(dash);
+    		if (OptionsHolder.BACKDASH_ENABLED.get()) ClientRegistry.registerKeyBinding(backDash);
     	}
     	
     	private static KeyBinding create(String name, int key) {
@@ -95,7 +98,8 @@ public class KynexDash
     	);
     	
     	public static void init() {
-    		CHANNEL.registerMessage(0, HungerPacket.class, HungerPacket::encode, HungerPacket::decode, HungerPacket::handle);
+    		CHANNEL.registerMessage(0, Packet.HungerPacket.class, Packet.HungerPacket::encode, Packet.HungerPacket::decode, Packet.HungerPacket::handle);
+    		CHANNEL.registerMessage(1, Packet.CrawlPacket.class, Packet.CrawlPacket::encode, Packet.CrawlPacket::decode, Packet.CrawlPacket::handle);
     	}
     }
     
